@@ -1,0 +1,351 @@
+#:import Window kivy.core.window.Window
+#:import dp kivy.metrics.dp
+#:import Animation kivy.animation.Animation
+#:import toast kivymd.toast.toast
+
+
+<SignInLoginScreen>
+	md_bg_color : 1, 1, 1, 1
+	
+	MDBoxLayout:
+		id : signin_widget_container
+		size_hint : None, None
+		size : Window.width*0.8, dp(200)
+		x_pos : 0.5
+		pos_hint : {"center_x":self.x_pos, "center_y":0.5}
+		orientation : "vertical"
+		spacing : 20
+		md_bg_color : 1, 1, 1, 1
+				
+		MDLabel:
+			text : "SIGN IN"
+			bold : True
+			halign : "center"
+			color : 0, 0, 0, 1
+			font_style : "H6"
+		
+		MDTextFieldRound:
+			id : signin_mobile
+			hint_text : "Mobile no."
+			icon_left : "phone"
+			icon_left_color : 0.5, 0.5, 0.5, 0.5
+			normal_color : 0.9, 0.9, 0.9, 0.9
+			color_active : 1, 1, 1, 1
+			input_filter : "int"
+			multiline : False
+			required : True
+			size_hint_x : 0.9
+			pos_hint : {"center_x":0.5, "center_y":0.5}
+			
+		MDTextFieldRound:
+			id : signin_email
+			hint_text : "email"
+			icon_left : "email"
+			icon_left_color : 0.5, 0.5, 0.5, 0.5
+			normal_color : 0.9, 0.9, 0.9, 0.9
+			color_active : 1, 1, 1, 1
+			required : True
+			multiline : False
+			size_hint_x : 0.9
+			pos_hint : {"center_x":0.5, "center_y":0.5}
+			
+		MDTextFieldRound:
+			id : signin_password
+			hint_text : "password"
+			password : True
+			password_mask : "*"
+			required : True
+			multiline : False
+			icon_left : "key-variant"
+			icon_left_color : 0.5, 0.5, 0.5, 0.5
+			icon_right : "eye-off"
+			icon_right_color : 0.5, 0.5, 0.5, 0.5
+			normal_color : 0.9, 0.9, 0.9, 0.9
+			color_active : 1, 1, 1, 1
+			size_hint_x : 0.9
+			pos_hint : {"center_x":0.5, "center_y":0.5}
+			
+		MDFillRoundFlatButton:
+			id : signin_submit_btn
+			text : "Submit"
+			md_bg_color : 0, 0, 0.5, 1
+			pos_hint : {"center_x":0.5, "center_y":0.5}
+			on_release :
+				root.signin_submit_action(str(signin_mobile.text), str(signin_email.text), str(signin_password.text))
+				
+				
+	MDBoxLayout:
+		id : login_widget_container
+		size_hint : None, None
+		size : Window.width*0.8, dp(160)
+		x_pos : 1.5
+		pos_hint : {"center_x":self.x_pos, "center_y":0.5}
+		orientation : "vertical"
+		spacing : 20
+		md_bg_color : 1, 1, 1, 1
+		
+		MDLabel:
+			text : "LOGIN"
+			bold : True
+			font_style : "H6"
+			halign : "center"
+			color : 0, 0, 0, 1
+			pos_hint : {"center_y":0.5}
+			
+		MDTextFieldRound:
+			id : login_email
+			hint_text : "email"
+			icon_left : "email"
+			icon_left_color : 0.5, 0.5, 0.5, 0.5
+			normal_color : 0.9, 0.9, 0.9, 0.9
+			color_active : 1, 1, 1, 1
+			required : True
+			multiline : False
+			size_hint_x : 0.9
+			pos_hint : {"center_x":0.5, "center_y":0.5}
+			
+		MDTextFieldRound:
+			id : login_password
+			hint_text : "password"
+			password : True
+			password_mask : "*"
+			required : True
+			multiline : False
+			icon_left : "key-variant"
+			icon_left_color : 0.5, 0.5, 0.5, 0.5
+			icon_right : "eye-off"
+			icon_right_color : 0.5, 0.5, 0.5, 0.5
+			normal_color : 0.9, 0.9, 0.9, 0.9
+			color_active : 1, 1, 1, 1
+			size_hint_x : 0.9
+			pos_hint : {"center_x":0.5, "center_y":0.5}
+			
+		MDFillRoundFlatButton:
+			id : login_submit_btn
+			text : "Submit"
+			md_bg_color : 0, 0, 0.5, 1
+			pos_hint : {"center_x":0.5, "center_y":0.5}
+			on_release :
+				root.login_submit_action(str(login_email.text), str(login_password))
+				
+				
+	MDBoxLayout:
+		id : already_user_widget_container
+		size_hint : None, None
+		size : dp(200), dp(50)
+		y_pos : 1
+		pos_hint : {"center_x":0.5}
+		y : 0 + int(dp(self.y_pos))
+		orientation : "horizontal"
+		MDLabel:
+			text : "Already a user?"
+			pos_hint : {"right":0.5, "center_y" : 0.5}
+			color : 0.5, 0.5, 0.5, 0.5
+			font_style : "Subtitle1"
+		MDRaisedButton:
+			text : "LOGIN"
+			md_bg_color : 0, 0, 0.5, 1
+			pos_hint : {"center_y":0.5}
+			on_release :
+				Animation(x_pos=1.5, d=0.25).start(signin_widget_container)
+				Animation(x_pos=0.5, d=0.25).start(login_widget_container)
+				Animation(y_pos=-80, d=0.25).start(already_user_widget_container)
+				Animation(y_pos=1, d=0.25).start(new_user_widget_container)
+			
+			
+	MDBoxLayout:
+		id : new_user_widget_container
+		size_hint : None, None
+		size : dp(200), dp(50)
+		y_pos : -80
+		pos_hint : {"center_x":0.5}
+		y : 0 + dp(self.y_pos)
+		orientation : "horizontal"
+		MDLabel:
+			text : "New user?"
+			pos_hint : {"right":0.5, "center_y" : 0.5}
+			color : 0.5, 0.5, 0.5, 0.5
+			font_style : "Subtitle1"
+		MDRaisedButton:
+			text : "SIGN IN"
+			md_bg_color : 0, 0, 0.5, 1
+			pos_hint : {"center_y":0.5}
+			on_release :
+				Animation(x_pos=1.5, d=0.25).start(login_widget_container)
+				Animation(x_pos=0.5, d=0.25).start(signin_widget_container)
+				Animation(y_pos=-80, d=0.25).start(new_user_widget_container)
+				Animation(y_pos=1, d=0.25).start(already_user_widget_container)
+				
+	
+	MDBoxLayout:
+		id : otp_verification_widget_container
+		size_hint : None, None
+		size : Window.width*0.8, dp(200)
+		spacing : 20
+		x_pos : 1.5
+		pos_hint : {"center_x":self.x_pos, "center_y":0.5}
+		orientation : "vertical"
+		md_bg_color : 1, 1, 1, 1
+		
+		MDLabel:
+			id : "VERIFY"
+			bold : True
+			halign : "center"
+			font_style : "H6"
+			color : 0, 0, 0, 1
+			pos_hint : {"center_y":0.5}
+			
+		MDLabel:
+			text : "Enter the OTP sent to registered email address"
+			halign : "center"
+			font_style : "Subtitle2"
+			color : 0, 0, 0, 1
+			pos_hint : {"center_y":0.5}
+			
+		MDTextFieldRound:
+			id : otp_text
+			icon_left : "cellphone"
+			icon_left_color : 0.5, 0.5, 0.5, 0.5
+			hint_text : "OTP"
+			normal_color : 0.9, 0.9, 0.9, 0.9
+			color_active : 1, 1, 1, 1
+			required : True
+			input_filter : "int"
+			multiline : False
+			size_hint_x : 0.5
+			pos_hint :{"center_x":0.5, "center_y":0.5}
+			
+		MDFillRoundFlatButton:
+			id : otp_verify_btn
+			text : "Verify"
+			md_bg_color : 0, 0, 0.5, 1
+			pos_hint : {"center_x":0.5, "center_y":0.5}
+			on_release :
+				Animation(x_pos=1.5, d=0.25).start(otp_verification_widget_container)
+				Animation(x_pos=0.5, d=0.25).start(profile_details_container)
+				Animation(y_pos=-80, d=0.25).start(resend_otp_widget_container)
+			
+	
+	MDBoxLayout:
+		id : resend_otp_widget_container
+		size_hint : None, None
+		size : dp(240), dp(50)
+		y_pos : -80
+		pos_hint : {"center_x":0.5}
+		y : 0 + int(dp(self.y_pos))
+		orientation : "horizontal"
+		MDLabel:
+			text : "Doesn\'t get OTP"
+			color : 0.5, 0.5, 0.5, 0.5
+			pos_hint : {"right":0.5, "center_y" : 0.5}
+			font_style : "Subtitle1"
+		
+		MDRaisedButton:
+			text : "Resend OTP"
+			md_bg_color : 0, 0, 0.5, 1
+			pos_hint : {"center_y":0.5}
+			on_release :
+				toast("OTP sent again")
+				
+				
+	MDBoxLayout:
+		id : profile_details_container
+		size_hint : None, None
+		size : Window.width*0.8, dp(320)
+		x_pos : 1.5
+		pos_hint : {"center_x":self.x_pos, "center_y":0.5}
+		orientation : "vertical"
+		spacing : 20
+		
+		MDLabel:
+			text : "PROFILE"
+			bold : True
+			halign : "center"
+			font_style : "H6"
+			color : 0, 0, 0, 1
+			pos_hint : {"center_y":0.5}
+			
+		MDTextFieldRound:
+			id : profile_name
+			icon_left : "account"
+			icon_left_color : 0.5, 0.5, 0.5, 0.5
+			hint_text : "Name"
+			size_hint_x : 0.9
+			normal_color : 0.9, 0.9, 0.9, 0.9
+			color_active : 1, 1, 1, 1
+			required : True
+			multiline : False
+			pos_hint : {"center_x":0.5, "center_y":0.5}
+			
+		MDTextFieldRound:
+			id : profile_vehicle_no
+			icon_left : "car"
+			icon_left_color : 0.5, 0.5, 0.5, 0.5
+			hint_text : "TN12AB3456"
+			size_hint_x : 0.9
+			normal_color : 0.9, 0.9, 0.9, 0.9
+			color_active : 1, 1, 1, 1
+			required : True
+			multiline : False
+			pos_hint : {"center_x":0.5, "center_y":0.5}
+			
+		MDTextFieldRound:
+			id : profile_aadhar_no
+			icon_left : "account-card-details"
+			icon_left_color : 0.5, 0.5, 0.5, 0.5
+			hint_text : "Aadhar no."
+			size_hint_x : 0.9
+			normal_color : 0.9, 0.9, 0.9, 0.9
+			color_active : 1, 1, 1, 1
+			required : True
+			multiline : False
+			pos_hint : {"center_x":0.5, "center_y":0.5}
+			
+		MDTextFieldRound:
+			id : profile_license_no
+			icon_left : "card-text"
+			icon_left_color : 0.5, 0.5, 0.5, 0.5
+			hint_text : "License no."
+			size_hint_x : 0.9
+			normal_color : 0.9, 0.9, 0.9, 0.9
+			color_active : 1, 1, 1, 1
+			required : True
+			multiline : False
+			pos_hint : {"center_x":0.5, "center_y":0.5}
+			
+		MDBoxLayout:
+			orientation : "horizontal"
+			Check:
+				active : True
+			MDLabel:
+				text : "SEDAN"
+				color : 0, 0, 0, 1
+			Check:
+			MDLabel:
+				text : "SUV"
+				color : 0, 0, 0, 1
+				
+		MDTextFieldRound:
+			id : profile_vehicle_model
+			icon_left : "car-info"
+			icon_left_color : 0.5, 0.5, 0.5, 0.5
+			hint_text : "Model"
+			size_hint_x : 0.9
+			normal_color : 0.9, 0.9, 0.9, 0.9
+			color_active : 1, 1, 1, 1
+			required : True
+			multiline : False
+			pos_hint : {"center_x":0.5, "center_y":0.5}
+			
+		MDFillRoundFlatButton:
+			id : profile_submit_btn
+			text : "Submit"
+			md_bg_color : 0, 0, 0.5, 1
+			pos_hint : {"center_x":0.5, "center_y":0.5}
+			
+		
+		
+<Check@MDCheckbox>:
+    group: 'group'
+    size_hint: None, None
+    size: dp(48), dp(48)

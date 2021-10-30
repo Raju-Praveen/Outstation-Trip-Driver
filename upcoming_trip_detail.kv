@@ -1,0 +1,20 @@
+#:import Window kivy.core.window.Window
+
+
+<UpComingTripDetail>
+	md_bg_color : 1, 1, 1, 1
+	
+	MDBoxLayout:
+		id : upcoming_trip_label_widget
+		size_hint : None, None
+		size : Window.width, dp(30)
+		top : Window.height - dp(100)
+		pos_hint : {"center_x":0.5}
+		
+		MDLabel:
+			text : "Upcoming Trip"
+			bold : True
+			halign : "center"
+			pos_hint : {"center_y":0.5}
+			color : 0, 0, 0, 1
+			

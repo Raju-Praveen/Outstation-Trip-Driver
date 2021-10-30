@@ -1,0 +1,72 @@
+#:import Window kivy.core.window.Window
+
+
+<AboutUsScreen>
+	md_bg_color : 1, 1, 1, 1
+	
+	MDFloatLayout:
+		id : toolbar
+		size_hint : None, None
+		size : Window.width, dp(50)
+		pos_hint : {"center_x":0.5}
+		top : Window.height
+		md_bg_color : 1, 1, 1, 1
+		
+		MDLabel:
+			text : "About Us"
+			bold : True
+			font_style : "Subtitle1"
+			color : 0, 0, 0, 1
+			halign : "center"
+			pos_hint : {"center_y":0.5}
+			
+	Image:
+		id : emsr_location
+		source : "emsr_location.png"
+		size_hint : None, None
+		size : Window.width, dp(200)
+		pos_hint : {"center_x":0.5}
+		top : toolbar.y
+		
+	MDBoxLayout:
+		id : about_outstation_trip
+		size_hint : None, None
+		size : Window.width*0.95, about_label.texture_size[1]
+		pos_hint : {"center_x":0.5}
+		y : emsr_location.y - about_label.texture_size[1] - dp(10)
+		
+		MDLabel:
+			id : about_label
+			text : "Outstation Trip is one among the most preferred & trusted taxi services in Tamilnadu, Bangalore, Pondy, Andhra Pradesh and nearby. The journey started in the year 2013 and we are still travelling with satisfied customers on the road."
+			halign : "center"
+			font_style : "Subtitle2"
+			color : 0.5, 0.5, 0.5, 1
+			
+	MDBoxLayout:
+		id : address_outstation_trip
+		size_hint : None, None
+		size : Window.width*0.95, dp(70)
+		pos_hint : {"center_x":0.5}
+		top : about_outstation_trip.y - dp(10) - address_label.texture_size[1]
+		
+		MDLabel:
+			id : address_label
+			text : "[color=#000000]Office:[/color]\nNo.39/30, Govindhadamy Nagar 4th street, Kandanchavadi, Perungudi, Chennai - 96"
+			markup : True
+			halign : "left"
+			font_style : "Subtitle2"
+			color : 0.5, 0.5, 0.5, 1
+			
+	MDBoxLayout:
+		id : enquiry_widget
+		size_hint : None, None
+		size : Window.width*0.95, dp(70)
+		pos_hint : {"center_x":0.5}
+		top : address_outstation_trip.y - dp(10)
+		
+		MDLabel:
+			text : " [color=#000000]For enquiry[/color],\n Call : +91 {0}   WhatsApp : +91 {1}".format(root.call_no, root.whatsapp_no)
+			markup : True
+			halign : "left"
+			font_style : "Subtitle2"
+			color : 0.5, 0.5, 0.5, 1

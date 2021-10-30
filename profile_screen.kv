@@ -1,0 +1,166 @@
+#:import Window kivy.core.window.Window
+
+
+<ProfileScreen>
+	md_bg_color : 1, 1, 1, 1
+	
+	MDFloatLayout:
+		id : toolbar
+		size_hint : None, None
+		size : Window.width, dp(50)
+		top : Window.height
+		pos_hint : {"center_x":0.5}
+		md_bg_color : 1, 1, 1, 1
+		
+		MDLabel:
+			text : "Profile"
+			bold : True
+			halign : "center"
+			font_style : "Subtitle1"
+			pos_hint : {"center_y":0.5}
+			color : 0, 0, 0, 1
+	
+	MDBoxLayout:
+		id : profile_picture_container
+		size_hint : None, None
+		size : Window.width, dp(56)
+		pos_hint : {"center_x":0.5}
+		top : toolbar.y - dp(5)
+		Image:
+			id : profile_picture
+			source : root.profile_picture
+			pos_hint : {"center_x":0.5, "center_y":0.5}
+			size : dp(56), dp(56)
+					
+				
+	MDBoxLayout:
+		id : wallet_balance
+		size_hint : None, None
+		size : Window.width, dp(56)
+		top : profile_picture_container.y - dp(5)
+		balance : root.wallet_balance
+		MDLabel:
+			text : "Wallet : Rs.{0} /-".format(wallet_balance.balance)
+			balance : 600
+			halign : "center"
+			color : 0, 0, 0, 1
+			font_style : "Subtitle1"
+			
+	MDFloatLayout:
+		id : user_name_widget
+		size_hint : None, None
+		size : Window.width*0.95, dp(20)
+		top : wallet_balance.y - dp(50)
+		pos_hint :{"center_x":0.5}
+		padding : 20, 0, 20, 0
+		
+		MDLabel:
+			text : "Name"
+			bold : True
+			font_style : "Subtitle1"
+			halign : "left"
+			pos_hint : {"center_y":0.5}
+			
+		MDLabel:
+			id : user_name
+			text : root.user_name
+			font_style : "Subtitle1"
+			halign : "right"
+			pos_hint : {"center_y":0.5}
+			
+	MDFloatLayout:
+		id : phone_widget
+		size_hint : None, None
+		size : Window.width*0.95, dp(20)
+		top : user_name_widget.y - dp(10)
+		pos_hint :{"center_x":0.5}
+		padding : 20, 0, 20, 0
+		
+		MDLabel:
+			text : "Mobile no."
+			bold : True
+			font_style : "Subtitle1"
+			halign : "left"
+			pos_hint : {"center_y":0.5}
+			
+		MDLabel:
+			id : mobile_no
+			text : root.mobile_no
+			font_style : "Subtitle1"
+			halign : "right"
+			pos_hint : {"center_y":0.5}
+			
+	MDFloatLayout:
+		id : vehicle_no_widget
+		size_hint : None, None
+		size : Window.width*0.95, dp(20)
+		top : phone_widget.y - dp(10)
+		pos_hint :{"center_x":0.5}
+		padding : 20, 0, 20, 0
+		
+		MDLabel:
+			text : "Vehicle no."
+			bold : True
+			font_style : "Subtitle1"
+			halign : "left"
+			pos_hint : {"center_y":0.5}
+			
+		MDLabel:
+			id : vehicle_no
+			text : root.vehicle_no
+			font_style : "Subtitle1"
+			halign : "right"
+			pos_hint : {"center_y":0.5}
+			
+	MDFloatLayout:
+		id : license_no_widget
+		size_hint : None, None
+		size : Window.width*0.95, dp(20)
+		top : vehicle_no_widget.y - dp(10)
+		pos_hint :{"center_x":0.5}
+		padding : 20, 0, 20, 0
+		
+		MDLabel:
+			text : "License no."
+			bold : True
+			font_style : "Subtitle1"
+			halign : "left"
+			pos_hint : {"center_y":0.5}
+			
+		MDLabel:
+			id : license_no
+			text : root.license_no
+			font_style : "Subtitle1"
+			halign : "right"
+			pos_hint : {"center_y":0.5}
+			
+	MDFloatLayout:
+		id : aadhar_no_widget
+		size_hint : None, None
+		size : Window.width*0.95, dp(20)
+		top : license_no_widget.y - dp(10)
+		pos_hint :{"center_x":0.5}
+		padding : 20, 0, 20, 0
+		
+		MDLabel:
+			text : "Aadhar no."
+			bold : True
+			font_style : "Subtitle1"
+			halign : "left"
+			pos_hint : {"center_y":0.5}
+			
+		MDLabel:
+			id : aadhar_no
+			text : root.aadhar_no
+			font_style : "Subtitle1"
+			halign : "right"
+			pos_hint : {"center_y":0.5}
+			
+	MDRaisedButton:
+		id : logout_btn
+		text : "LOGOUT"
+		md_bg_color : 0, 0, 0.3, 0.9
+		size_hint : None, None
+		size : Window.width*0.8, dp(35)
+		pos_hint : {"center_x":0.5}
+		y : 0 + dp(20)

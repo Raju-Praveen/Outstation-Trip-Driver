@@ -1,0 +1,103 @@
+#:import Window kivy.core.window.Window
+
+
+<WalletScreen>
+	md_bg_color : 1, 1, 1, 1
+	
+	MDFloatLayout:
+        id : tool
+        size_hint : None, None
+        size : Window.width, dp(60)
+        md_bg_color : 1, 1, 1, 1
+        top : Window.height
+        
+        MDLabel:
+        	text : "[b]Wallet[/b]"
+        	markup : True
+        	font_style : "H6"
+        	color : 0, 0, 0, 1
+        	halign : "center"
+        	pos_hint : {"center_y":0.5}
+        	
+    MDBoxLayout:
+    	id : balance_label
+    	orientation : "vertical"
+    	size_hint : None, None
+    	size : Window.width, dp(90)
+    	top : tool.y - dp(5)
+    	MDLabel:
+    		text : "Your wallet balance is"
+    		halign : "center"
+    		font_style : "Subtitle2"
+    		pos_hint : {"center_x":0.5}
+    	MDLabel:
+    		id : balance_text
+    		balance : 0
+    		text : "[size=25]Rs. [/size]{0}[size=25]/-[/size]".format(self.balance)
+    		markup : True
+    		font_style : "H5"
+    		halign : "center"
+    		pos_hint : {"center_y":0.5}
+    		
+    MDLabel:
+    	number : "7010900496"
+    	text : "[size=25]*Note : When ever you make a payment, take a screenshot of payment completion and WhatsApp to {0} from the registered mobile number.[/size]".format(self.number)
+    	markup : True
+    	halign : "center"
+    	pos_hint :{"center_y":0.5}
+    	color : 0.6, 0.6, 0.6, 1
+    		
+    
+    MDBoxLayout:
+    	id : pay_using_label
+    	orientation : "vertical"
+    	size_hint : None, None
+    	size : Window.width*0.8, dp(100)
+    	top : 0 + self.height + dp(10)
+    	pos_hint : {"center_x":0.5}
+    	canvas:
+    		Color:
+    			rgba : 1, 1, 1, 1
+    		RoundedRectangle:
+    			size : self.size
+    			pos : self.pos
+    			segments : [25, 25, 25, 25]
+    	MDLabel:
+    		text : "[b]Pay using[/b]"
+    		markup : True
+    		halign : "center"
+    		pos_hint : {"center_y":0.5}
+    	MDLabel:
+    		text : ""
+    		
+    Image:
+    	id : phonepe_icon
+    	source : "phonepe.png"
+    	size_hint : None, None
+    	size : dp(35), dp(35)
+    	right : Window.width/2 - dp(4)
+    	top : pay_using_label.top - pay_using_label.height/2
+    
+    Image:
+    	id : google_pay_icon
+    	source : "google_pay.png"
+    	size_hint : None, None
+    	size : dp(53), dp(53)
+    	right : Window.width/2 - phonepe_icon.width - dp(8)
+    	top : phonepe_icon.top + dp(8)
+    	
+    Image:
+    	id : upi_icon
+    	source : "upi.png"
+    	size_hint : None, None
+    	size : dp(53), dp(53)
+    	x : Window.width/2 + dp(4)
+    	top : phonepe_icon.top + dp(8)
+    	
+    Image:
+    	id : amazon_pay_upi
+    	source : "amazon_pay.png"
+    	size_hint : None, None
+    	size : dp(35), dp(35) 
+    	x : Window.width/2 + upi_icon.width + dp(8)
+    	top : phonepe_icon.top

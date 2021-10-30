@@ -1,0 +1,358 @@
+#:import Window kivy.core.window.Window
+#:import dp kivy.metrics.dp
+#:import Animation kivy.animation.Animation
+
+
+<HomeScreen>
+	md_bg_color : 1, 1, 1, 1
+	
+	MDFloatLayout:
+		id : outstation_toolbar
+		size_hint : None, None
+		size : Window.width, dp(60)
+		top : Window.height
+		pos_hint : {"center_x":0.5}
+		
+		MDIconButton:
+			id : menu_btn
+			icon : "menu"
+			theme_text_color : "Custom"
+			text_color : 0, 0, 0, 1
+			x : 0 + dp(1)
+			pos_hint : {"center_y":0.5}
+			on_release :
+				nav_drawer.toggle_nav_drawer()
+			
+		MDLabel:
+			text : "Outstation Trip"
+			bold : True
+			x : 0 + menu_btn.width
+			font_style : "H6"
+			color : 0, 0, 0, 1
+			pos_hint : {"center_y":0.5}
+			
+		Image:
+            id : eligible_mark
+            source : "red_circle.png"
+            size_hint : None, None
+            size : outstation_toolbar.height/3, outstation_toolbar.height/3
+            right : Window.width - self.width - dp(5)
+            pos_hint : {"center_y":0.5}
+            value : 1
+            canvas.before:
+                PushMatrix
+                Scale:
+                    x : self.value
+                    y : self.value
+                    z : self.value
+                    origin : self.center
+            canvas.after:
+                PopMatrix
+					
+					
+	MDBoxLayout:
+		size_hint : None, None
+		size: Window.width, dp(50)
+		top : outstation_toolbar.y
+		orientation : "horizontal"
+		
+		Button:
+			id : available_trip_btn
+			opacity : 0
+			on_release :
+				root.anim_tab_bar(0, 0.33)
+				available_label.color = (11/255, 143/255, 68/255, 1)
+				upcoming_label.color = (0, 0, 0, 1)
+				history_label.color = (0, 0, 0, 1)
+				Animation(value=1.5, d=0.25).start(trips_type_container)
+			
+		Button:
+			id : upcoming_trip_btn
+			opacity : 0
+			on_release :
+				root.anim_tab_bar(0.34, 0.66)
+				upcoming_label.color = (11/255, 143/255, 68/255, 1)
+				available_label.color = (0, 0, 0, 1)
+				history_label.color = (0, 0, 0, 1)
+				Animation(value=0.5, d=0.25).start(trips_type_container)
+			
+		Button:
+			id : history_trip_btn
+			opacity : 0
+			on_release :
+				root.anim_tab_bar(0.67, 1)
+				history_label.color = (11/255, 143/255, 68/255, 1)
+				upcoming_label.color = (0, 0, 0, 1)
+				available_label.color = (0, 0, 0, 1)
+				Animation(value=-0.5, d=0.25).start(trips_type_container)
+			
+			
+	MDBoxLayout:
+		size_hint : None, None
+		size: Window.width, dp(50)
+		top : outstation_toolbar.y
+		orientation : "horizontal"
+		
+		MDLabel:
+			id : available_label
+			text : "Available"
+			font_style : "Subtitle1"
+			color : 11/255, 143/255, 68/255, 1
+			size_hint_x : 0.33
+			halign : "center"
+			pos_hint : {"center_y":0.5}
+			
+		MDLabel:
+			id : upcoming_label
+			text : "Upcoming"
+			font_style : "Subtitle1"
+			color : 0, 0, 0, 1
+			size_hint_x : 0.33
+			halign : "center"
+			pos_hint : {"center_y":0.5}
+			
+		MDLabel:
+			id : history_label
+			text : "History"
+			font_style : "Subtitle1"
+			color : 0, 0, 0, 1
+			size_hint_x : 0.33
+			halign : "center"
+			pos_hint : {"center_y":0.5}
+			
+			
+	MDLabel:
+		id : active_tab
+		text : ""
+		x_start : 0
+		x_end : 0.33
+		y_fixed : int(Window.height- dp(60) - dp(50))
+		canvas:
+			Color:
+				rgba : 11/255, 143/255, 68/255, 1
+			Line:
+				points : [Window.width*self.x_start, self.y_fixed, Window.width*self.x_end, self.y_fixed]
+				width : 3
+				
+	MDBoxLayout:
+		id : trips_type_container
+		size_hint : None, None
+		size : Window.width * 3, Window.height - dp(115)
+		top : Window.height - dp(120)
+		value : 1.5
+		pos_hint : {"center_x":self.value}
+		orientation : "horizontal"
+		canvas:
+			Color:
+				rgba : 1, 1, 1, 1
+			Rectangle:
+				size : self.size
+				pos : self.pos
+		MDBoxLayout:
+			id : available_trips_container
+			padding : 20, 0, 20, 0
+			canvas:
+				Color:
+					rgba : 1, 1, 1, 1
+				Rectangle:
+					size : self.size
+					pos : self.pos
+			AvailableTrips:
+					
+		MDBoxLayout:
+			id : upcoming_trips_container
+			padding : 20, 0, 20, 0
+			canvas:
+				Color:
+					rgba : 1, 1, 1, 1
+				Rectangle:
+					size : self.size
+					pos : self.pos
+			UpcomingTrips:
+					
+		MDBoxLayout:
+			id : history_trips_container
+			padding : 20, 0, 20, 0
+			canvas:
+				Color:
+					rgba : 1, 1, 1, 1
+				Rectangle:
+					size : self.size
+					pos : self.pos
+				
+				
+	MDNavigationDrawer:
+		id : nav_drawer
+		
+	    BoxLayout:
+	    	orientation : "vertical"
+	    	padding : "8dp"
+	    	spacing :"8dp"
+	    	
+	    	AnchorLayout:
+	    		anchor_x : "left"
+	    		size_hint_y : None
+	    		height : self.height
+	    		Image:
+	    			id : user_icon
+	    			source : "amazon_pay.png"
+	    			size_hint : None, None
+	    			size : dp(56), dp(56)
+	    	
+	    	MDLabel:
+	    		text : "Praveen kumar"
+	    		font_style : "Button"
+	    		size_hint_y : None
+	    		height : self.texture_size[1]
+	    		
+	    	MDLabel:
+
+	    		text : "sign24massth@gmail.com"
+	    		font_style : "Caption"
+	    		size_hint_y : None
+	    		color : 0.5, 0.5, 0.5, 1
+	    		height : self.texture_size[1]
+	    		
+	    	ScrollView:
+	    		do_scroll_x :False
+	    		do_scroll_y : True
+	    		height : Window.height/2
+	    		GridLayout:
+	    			cols : 1
+	    			size_hint : 1, None
+		    		OneLineIconListItem:
+		    			text : "Profile"
+		    			on_release: root.change_screen("profile")
+		    			IconLeftWidget:
+		    				icon : "account-circle-outline"
+		    		OneLineIconListItem:
+		    			text : "Wallet"
+		    			on_release: root.change_screen("wallet")
+		    			IconLeftWidget:
+		    				icon : "wallet-outline"
+		    		OneLineIconListItem:
+		    			text : "About us"
+		    			on_release: root.change_screen("aboutus")
+		    			IconLeftWidget:
+		    				icon : "message-text"
+				
+				
+				
+<NavigationDrawerContent>:
+	orientation : "vertical"
+	padding : "8dp"
+	spacing : "8dp"
+	size_hint : None, None
+	size : Window.width, dp(150)
+	top : Window.height - dp(20)
+	
+	AnchorLayout:
+		anchor_x : "left"
+		height : profile_picture.height
+		
+		Image:
+			id : profile_picture
+			size_hint : None, None
+			size : dp(56), dp(56)
+			source : "profile_picture.jpg"
+			
+	MDLabel:
+		id : profile_name
+		text : "Praveen"
+		font_style : "Subtitle2"
+		color : 0, 0, 0, 1
+		height : self.texture_size[1]
+		
+	MDLabel:
+		id : profile_email
+		text : "sign24massth@gmail.com"
+		font_style : "Caption"
+		color : 0.3, 0.3, 0.3, 0.7
+		height : self.texture_size[1]
+		
+		
+		
+<EveryTrip>:
+	size_hint : None, None
+	size : Window.width - 45, dp(100)
+	orientation : "horizontal"
+	bg_color : 203/255, 233/255, 235/255, 0.25
+    canvas:
+    	Color:
+    		rgba : self.bg_color
+    	RoundedRectangle:
+    		size : self.size
+    		pos : self.pos
+    		segments : 15
+    TripWidget:
+        orientation : "vertical"
+        size_hint : None, None
+        size : Window.width-dp(110), dp(100)
+        pos_hint : {"center_x":0.375}
+        md_bg_color : 203/255, 233/255, 235/255, 0.01
+        elevation : 0
+        TripWidget:
+            orientation : "horizontal"
+            size_hint : None, None
+            size : root.width- (trip_type.texture_size[0]/2), dp(25)
+            md_bg_color : 203/255, 233/255, 235/255, 0.01
+            elevation : 0
+            MDLabel:
+	            id : vehicle
+	            vehicle : "SEDAN"
+	            text : "[b]{0}[/b]".format(self.vehicle)
+	            font_style : "Subtitle2"
+	            markup : True
+	            padding : 25, 1
+	        MDLabel:
+	        	id : trip_type
+	        	var : 0
+	        	type : "ONE WAY" if self.var==1 else "ROUND TRIP"
+	        	colors : "#0f5923" if self.var==1 else "#2b96c4"
+	        	text : "[b][color={0}]{1}[/color][/b]".format(self.colors, self.type)
+	        	font_style : "Subtitle2"
+	        	markup : True
+	        	pos_hint : {"right":0.8}
+	        
+	        	
+	    MDLabel:
+            id : start_loc
+            text : root.start_loc
+            font_style : "H6"
+            markup : True
+            padding : 25, 1
+        MDLabel:
+            text : "to"
+            font_style : "Button"
+            markup : True
+            padding : 25, 1
+        MDLabel:
+            id : drop_loc
+            text : "Salem"
+            font_style : "H6"
+            markup : True
+            padding : 25, 1
+            
+            
+    TripWidget:
+    	id : date
+		orientation : "vertical"
+		size_hint : None, None
+		size : dp(80), dp(90)
+		md_bg_color : 203/255, 233/255, 235/255, 0.01
+		right : Window.width + dp(20)
+		pos_hint : {"center_y":0.5}
+		elevation : 0
+		MDLabel:
+			text : "[b]05-09-2021[/b]"
+			font_style : "Subtitle2"
+			markup : True
+			color : 0, 0, 0, 1
+		MDLabel:
+			text : "09:30 AM"
+			font_style : "Subtitle2"
+			markup : True
+			color : 0, 0, 0, 1
+		MDRaisedButton:
+			id : accept_btn
+			text : root.accept
